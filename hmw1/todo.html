@@ -1,0 +1,72 @@
+<div id="root"></div>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+<script type="text/babel">
+   const rootElement = document.getElementById("root")
+
+   class App extends React.Component {
+     state = {
+       name: ' ',
+       todo: [],
+     };
+
+
+     addSmth = () => {
+       console.log("here&counter: ", this.state.name)
+       const tmp = this.state.name
+       this.setState({
+         name: ' ',
+         todo: [...this.state.todo, tmp]
+       })
+     }
+
+     ChangeName = event => {
+       console.log("here ", event.target.value)
+       this.setState({name: event.target.value})
+     };
+
+     Done = (index) => {
+       console.log("done: ", this.state.todo)
+       const tmp = this.state.todo
+       tmp.splice(index, 1)
+       this.setState({
+         todo: tmp
+       })
+     }
+
+     Clear = () => {
+       this.setState({
+         todo: []
+       })
+     }
+
+     render() {
+       return (
+         <div>
+           <p>List:</p>
+
+           <p>{
+             this.state.todo.map((item, index) => {
+               return <div key={index} onClick={() => this.Done(index)}>{item}</div>
+             })
+           }</p>
+
+           <button onClick={this.addSmth}>
+             Add
+           </button>
+
+           <br/>
+           <input onChange={this.ChangeName}/>
+           <br/>
+
+           <button onClick={this.Clear}>
+             Clear
+           </button>
+
+         </div>
+       )
+     }
+   }
+   ReactDOM.render(<App />, rootElement)
+</script>
